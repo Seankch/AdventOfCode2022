@@ -4,7 +4,9 @@
 #define STRING_BUFFER_SIZE 50
 #define NUM_OF_MONKEYS 8
 
-enum {FRONT_OF_QUEUE};
+enum {
+    FRONT_OF_QUEUE
+};
 
 typedef struct MonkeyInfo{
     // Store items
@@ -99,6 +101,11 @@ void ParseInput(MonkeyInfo _monkeys[]){
 }
 
 long DoMonkeyBusiness(MonkeyInfo _monkeys[], int _maxRoundCount, int _isPart1){
+    int product = 1;
+    for (int i = 0; i < NUM_OF_MONKEYS; ++i){
+        product *= _monkeys[i].testValue;
+    }
+    
     for (int roundCount = 0; roundCount < _maxRoundCount; ++roundCount){
         for (int i = 0; i < NUM_OF_MONKEYS; ++i){
             while(_monkeys[i].itemListSize > 0){
@@ -118,10 +125,6 @@ long DoMonkeyBusiness(MonkeyInfo _monkeys[], int _maxRoundCount, int _isPart1){
                 }
                 else{
                     // Modulo by product of all test values to reduce worry
-                    int product = 1;
-                    for (int i = 0; i < NUM_OF_MONKEYS; ++i){
-                        product *= _monkeys[i].testValue;
-                    }
                     _monkeys[i].itemList[FRONT_OF_QUEUE] %= product;
                 }
 
