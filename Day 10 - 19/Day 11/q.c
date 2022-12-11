@@ -3,7 +3,8 @@
 #include <string.h>
 #define STRING_BUFFER_SIZE 50
 #define NUM_OF_MONKEYS 8
-#define FRONT_OF_QUEUE 0
+
+enum {FRONT_OF_QUEUE};
 
 typedef struct MonkeyInfo{
     // Store items
@@ -105,15 +106,15 @@ long DoMonkeyBusiness(MonkeyInfo _monkeys[], int _maxRoundCount, int _isPart1){
 
                 // Perform operation. if operationValue is -1, then multiply/add by its old value
                 if (_monkeys[i].operationOperator == '*'){
-                    _monkeys[i].itemList[0] *= (_monkeys[i].operationValue == -1)? _monkeys[i].itemList[0] : _monkeys[i].operationValue;
+                    _monkeys[i].itemList[FRONT_OF_QUEUE] *= (_monkeys[i].operationValue == -1)? _monkeys[i].itemList[FRONT_OF_QUEUE] : _monkeys[i].operationValue;
                 }
                 else{
-                    _monkeys[i].itemList[0] += (_monkeys[i].operationValue == -1)? _monkeys[i].itemList[0] : _monkeys[i].operationValue;
+                    _monkeys[i].itemList[FRONT_OF_QUEUE] += (_monkeys[i].operationValue == -1)? _monkeys[i].itemList[FRONT_OF_QUEUE] : _monkeys[i].operationValue;
                 }
 
                 if (_isPart1){
                     // Monkey gets bored, divide worry by 3
-                    _monkeys[i].itemList[0] /= 3;
+                    _monkeys[i].itemList[FRONT_OF_QUEUE] /= 3;
                 }
                 else{
                     // Modulo by product of all test values to reduce worry
@@ -121,11 +122,11 @@ long DoMonkeyBusiness(MonkeyInfo _monkeys[], int _maxRoundCount, int _isPart1){
                     for (int i = 0; i < NUM_OF_MONKEYS; ++i){
                         product *= _monkeys[i].testValue;
                     }
-                    _monkeys[i].itemList[0] %= product;
+                    _monkeys[i].itemList[FRONT_OF_QUEUE] %= product;
                 }
 
                 // Perform division test and throw item
-                int isDivisible = !(_monkeys[i].itemList[0] % _monkeys[i].testValue);
+                int isDivisible = !(_monkeys[i].itemList[FRONT_OF_QUEUE] % _monkeys[i].testValue);
                 int nextMonkeyIndex = _monkeys[i].nextMonkeyIndex[isDivisible];
                 ThrowItem(&_monkeys[i], &_monkeys[nextMonkeyIndex]);
             }
