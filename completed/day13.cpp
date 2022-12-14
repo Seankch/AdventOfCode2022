@@ -230,7 +230,7 @@ int Part_2(void){
     int result = 1;
     for (int i = 0; i < TOTAL_NUM_OF_PACKETS; ++i){
         if (packetData[i] == temp2 || packetData[i] == temp6){
-                result *= (i + 1);
+            result *= (i + 1);
         }
     }
 
